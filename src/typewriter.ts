@@ -36,7 +36,7 @@ export class TypeWriter {
       if (this._isEnabled) {
         const contentChanges = event['contentChanges'];
         if (contentChanges.length > 0) {
-          let text: string = contentChanges[0]['text'];
+          const text: string = contentChanges[0]['text'];
 
           // TODO: Add typewriter sound
           switch (text[0]) {
