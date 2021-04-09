@@ -24,11 +24,31 @@ export class TypeWriter {
     });
 
     vscode.workspace.onDidChangeConfiguration(event => {
-      let affected = event.affectsConfiguration("typewriter.enabled");
+      const affected = event.affectsConfiguration("typewriter.enabled");
       if (affected) {
         const config: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("typewriter");
         this._isEnabled = config.get<boolean>("enabled", false);
         this._updateWorkspace(true);
+      }
+    });
+
+    vscode.workspace.onDidChangeTextDocument(event => {
+      if (this._isEnabled) {
+        const contentChanges = event['contentChanges'];
+        if (contentChanges.length > 0) {
+          let text: string = contentChanges[0]['text'];
+
+          // TODO: Add typewriter sound
+          switch (text[0]) {
+            case "\r":
+            case "\n":
+              console.log("Stroke the enter");
+              break;
+            default:
+              console.log("Stroke the key");
+              break;
+          }
+        }
       }
     });
   }
