@@ -33,6 +33,11 @@
           "type": "integer",
           "default": 100,
           "description": "Set the priority of Typewriter button in the status bar"
+        },
+        "typewriter.storage.cursorSurroundingLines": {
+          "type": "integer",
+          "default": 100,
+          "description": "Storage for store cursorSurroundingLines"
         }
       }
     }

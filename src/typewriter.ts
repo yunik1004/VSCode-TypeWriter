@@ -38,16 +38,19 @@ export class TypeWriter {
     this._dpSwitch.dispose();
   }
 
-  private _updateWorkspace(showMessage: boolean): void {
+  private _updateWorkspace(isChanged: boolean): void {
     this._statusBarItem.text = this._getStatusBarText();
 
-    if (this._isEnabled) {
-      // TODO
-    } else {
-      // TODO
-    }
+    if (isChanged) {
+      const config_editor: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("editor");
+      const config_typewriter: vscode.WorkspaceConfiguration = vscode.workspace.getConfiguration("typewriter");
 
-    if (showMessage) {
+      const editor_cs: number = config_editor.get<number>("cursorSurroundingLines", 0);
+      const storage_cs: number = config_typewriter.get<number>("storage.cursorSurroundingLines", 0);
+
+      config_editor.update("cursorSurroundingLines", storage_cs, TypeWriter._configTarget);
+      config_typewriter.update("storage.cursorSurroundingLines", editor_cs, TypeWriter._configTarget);
+
       if (this._isEnabled) {
         vscode.window.showInformationMessage('TypeWriter mode enabled!');
       } else {
